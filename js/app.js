@@ -40,7 +40,7 @@ var Player = function() {
 };
 Player.prototype.update = function(dt) {
     //make sure that the player won't be hidden behind the canvas
-    if (this.x > 500 || this.x < 0) {
+    if (this.x > 400 || this.x < 0) {
         this.x = 200;
     }
 
