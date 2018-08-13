@@ -162,6 +162,12 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        enemy1 = new Enemy(0, 100, 100); 
+        enemy2 = new Enemy(0, 140, 150);
+        enemy3 = new Enemy(0, 170, 75);
+        allEnemies = [enemy1, enemy2, enemy3];
+        player = new Player(); // global var
+        pause = false;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
