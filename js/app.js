@@ -1,13 +1,15 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x,y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 10;
-    this.y = 100;
+    this.x = x;
+    this.y = y;
+    //this.speed = speed;
+    return this;
 };
 
 // Update the enemy's position, required method for game
@@ -16,7 +18,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += 1;
+    this.x += 2;
+    //make sure that enemies won't be hidden behind the canvas
     if (this.x > 500) {
         this.x = 0;
     }
@@ -36,6 +39,14 @@ var Player = function() {
  this.y = 350;
 };
 Player.prototype.update = function(dt) {
+    //make sure that the player won't be hidden behind the canvas
+    if (this.x > 500 || this.x < 0) {
+        this.x = 200;
+    }
+
+    if (this.y > 480 || this.y < 0) {
+        this.y = 400;
+    }
 };
 Player.prototype.render = function() {
  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -43,8 +54,11 @@ Player.prototype.render = function() {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player. The following two lines are taken from a post on discussions.udacity.com
-var allEnemies = [new Enemy()];
+// Place the player object in a variable called player. 
+var enemyBug1 = new Enemy(150, 100); 
+var enemyBug2 = new Enemy(180, 150);
+var enemyBug3 = new Enemy(200, 75);
+var allEnemies = [enemyBug1, enemyBug2, enemyBug3];
 
 var player = new Player();
 
