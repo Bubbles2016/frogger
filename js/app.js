@@ -71,11 +71,10 @@ Player.prototype.handleCollision = function(enemy) {
             rect1.y < rect2.y + rect2.height &&
             rect1.height + rect1.y > rect2.y)   {
                 return true;
-
         }
-
-        let collision = detectCollision(enemy, player);
-        if (collision) {
+    }
+    
+    if (detectCollision(enemy, player)) {
             //reset the player and the enemies positions.
             enemy1 = new Enemy(0, 100, 100); 
             enemy2 = new Enemy(0, 140, 150);
@@ -83,7 +82,6 @@ Player.prototype.handleCollision = function(enemy) {
             allEnemies = [enemy1, enemy2, enemy3];
             player = new Player(); // global var
             pause = false;
-        }
     }
 }
 
