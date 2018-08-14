@@ -88,6 +88,21 @@ Player.prototype.handleCollision = function(enemy) {
 
 Player.prototype.render = function() {
  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+ if (this.y === 50) {
+        ctx.font = '40px monospace';
+        //ctx.fontStyle = "rgb(24, 24, 104)";
+        //ctx.fillStyle = "rgb(0, 0 ,0)";
+        //ctx.fillText("You are safe now!", 100, 250); // text written to screen. fillText function takes a string and x and y arguments 
+        //pause = true;
+        setTimeout( function(){
+            pause = true;
+            enemy1 = new Enemy(0, 100, 100); 
+            enemy2 = new Enemy(0, 140, 150);
+            enemy3 = new Enemy(0, 170, 75);
+            allEnemies = [enemy1, enemy2, enemy3];
+            player = new Player();
+            pause = false;}, 500);
+    }
 };
 
 // Now instantiate your objects.
