@@ -9,6 +9,9 @@ var Enemy = function(x,y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    //The following lines are taken from a post on discussions.udacity.com. https://discussions.udacity.com/t/project-3-arcade-game/316414/10
+    this.width = 75;
+    this.height = 50;
     return this;
 };
 
@@ -38,6 +41,8 @@ var Player = function() {
  this.sprite = 'images/char-boy.png';
  this.x = 200;
  this.y = 350;
+ this.width = 50;
+ this.height = 75;
 };
 
 Player.prototype.update = function(dt) {
@@ -49,13 +54,17 @@ Player.prototype.update = function(dt) {
     if (this.y > 480 || this.y < 0) {
         this.y = 400;
     }
+
+    for(let i = 0; i < allEnemies.length; i++) {
+        this.handleCollision(allEnemies[i]);        
+    }
 };
 
 Player.prototype.handleCollision = function(enemy) {
     
     function detectCollision(enemy, player){
-        var rect1 = {x: enemy.x, y: enemy.y, width: 50, height: 50} //enemy 1 or enemy 2 or enemy 3
-        var rect2 = {x: player.x, y: player.y, width: 10, height: 10} //the player
+        var rect1 = {x: enemy.x, y: enemy.y, width: enemy.width, height: enemy.height} //enemy 1 or enemy 2 or enemy 3
+        var rect2 = {x: player.x, y: player.y, width: player.width, height: player.height} //the player. 
 
         if (rect1.x < rect2.x + rect2.width &&
             rect1.x + rect1.width > rect2.x &&
@@ -65,9 +74,15 @@ Player.prototype.handleCollision = function(enemy) {
 
         }
 
-        let collision = detectCollision(enemy, player) || detectCollision(player, enemy);
+        let collision = detectCollision(enemy, player);
         if (collision) {
-            reset();
+            //reset the player and the enemies positions.
+            enemy1 = new Enemy(0, 100, 100); 
+            enemy2 = new Enemy(0, 140, 150);
+            enemy3 = new Enemy(0, 170, 75);
+            allEnemies = [enemy1, enemy2, enemy3];
+            player = new Player(); // global var
+            pause = false;
         }
     }
 }
