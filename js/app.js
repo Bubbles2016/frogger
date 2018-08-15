@@ -21,6 +21,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    //TODO: make the enemy moves by adding a random number to its x coordinate
     this.x = this.x + this.speed * dt;
     //make sure that enemies won't be hidden behind the canvas
     if (this.x > 500) {
@@ -36,13 +37,13 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method. 
-//Lines 37-42 are taken from a post on discussions.udacity.com
+// I wrote lines 42-45 after I saw hints in a post on discussions.udacity.com. https://discussions.udacity.com/t/i-dont-understand-how-to-code-classic-arcade-game/527836/2?u=solittletime
 var Player = function() {
- this.sprite = 'images/char-boy.png';
- this.x = 200;
- this.y = 350;
- this.width = 50;
- this.height = 75;
+    this.sprite = 'images/char-boy.png';
+    this.x = 200;
+    this.y = 350;
+    this.width = 50;
+    this.height = 75;
 };
 
 Player.prototype.update = function(dt) {
@@ -56,13 +57,14 @@ Player.prototype.update = function(dt) {
     }
 
     for(let i = 0; i < allEnemies.length; i++) {
-        this.handleCollision(allEnemies[i]);        
+        this.handleCollision(allEnemies[i]);
     }
 };
 
 Player.prototype.handleCollision = function(enemy) {
     
     function detectCollision(enemy, player){
+        //The following code is taken from MDN: https://developer.mozilla.org/kab/docs/Games/Techniques/2D_collision_detection
         var rect1 = {x: enemy.x, y: enemy.y, width: enemy.width, height: enemy.height} //enemy 1 or enemy 2 or enemy 3
         var rect2 = {x: player.x, y: player.y, width: player.width, height: player.height} //the player. 
 
@@ -75,28 +77,24 @@ Player.prototype.handleCollision = function(enemy) {
     }
     
     if (detectCollision(enemy, player)) {
-            //reset the player and the enemies positions.
-            enemy1 = new Enemy(0, 100, 100); 
-            enemy2 = new Enemy(0, 140, 150);
-            enemy3 = new Enemy(0, 170, 75);
-            allEnemies = [enemy1, enemy2, enemy3];
-            player = new Player(); // global var
-            pause = false;
+        //reset the player and the enemies positions.
+        enemy1 = new Enemy(0, 100, 100);
+        enemy2 = new Enemy(0, 140, 150);
+        enemy3 = new Enemy(0, 170, 75);
+        allEnemies = [enemy1, enemy2, enemy3];
+        player = new Player(); // global var
+        pause = false;
     }
 }
 
 
 Player.prototype.render = function() {
- ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
- if (this.y === 50) {
-        ctx.font = '40px monospace';
-        //ctx.fontStyle = "rgb(24, 24, 104)";
-        //ctx.fillStyle = "rgb(0, 0 ,0)";
-        //ctx.fillText("You are safe now!", 100, 250); // text written to screen. fillText function takes a string and x and y arguments 
-        //pause = true;
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    //when player wins, i.e reach the water, reset the position of all the enemies and the player. 
+    if (this.y === 50) {
         setTimeout( function(){
             pause = true;
-            enemy1 = new Enemy(0, 100, 100); 
+            enemy1 = new Enemy(0, 100, 100);
             enemy2 = new Enemy(0, 140, 150);
             enemy3 = new Enemy(0, 170, 75);
             allEnemies = [enemy1, enemy2, enemy3];
@@ -108,28 +106,28 @@ Player.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player. 
-var enemy1 = new Enemy(0, 100, 100); 
+var enemy1 = new Enemy(0, 100, 100);
 var enemy2 = new Enemy(0, 150, 120);
 var enemy3 = new Enemy(0, 75, 80);
 var allEnemies = [enemy1, enemy2, enemy3];
 
 var player = new Player();
 
-let pause; 
+let pause;
 
 Player.prototype.handleInput = function(dt) {
     switch (dt) {
-        case "up":
-            this.y -= 50;
+        case 'up':
+            this.y -= 60;
             break;
-        case "down":
-            this.y += 50;
+        case 'down':
+            this.y += 60;
             break;
-        case "left":
-            this.x -= 50;
+        case 'left':
+            this.x -= 60;
             break;
-        case "right":
-            this.x += 50;
+        case 'right':
+            this.x += 60;
             break;
     }
 };
