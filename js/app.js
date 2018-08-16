@@ -99,7 +99,10 @@ Player.prototype.render = function() {
             enemy3 = new Enemy(0, 170, 75);
             allEnemies = [enemy1, enemy2, enemy3];
             player = new Player();
-            pause = false;}, 500);
+            pause = false;
+        }, 500);
+        ctx.font = '30px monospace';
+        ctx.fillText("You won", 150, 250);    
     }
 };
 
@@ -118,16 +121,16 @@ let pause;
 Player.prototype.handleInput = function(dt) {
     switch (dt) {
         case 'up':
-            this.y -= 60;
+            this.y -= 50;
             break;
         case 'down':
-            this.y += 60;
+            this.y += 50;
             break;
         case 'left':
-            this.x -= 60;
+            this.x -= 50;
             break;
         case 'right':
-            this.x += 60;
+            this.x += 50;
             break;
     }
 };
