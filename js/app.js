@@ -1,3 +1,4 @@
+'use strict';
 // Enemies our player must avoid
 var Enemy = function(x,y, speed) {
     // Variables applied to each of our instances go here,
@@ -37,7 +38,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method. 
-// I wrote lines 42-45 after I saw hints in a post on discussions.udacity.com. https://discussions.udacity.com/t/i-dont-understand-how-to-code-classic-arcade-game/527836/2?u=solittletime
+// I wrote lines 44-45 after I saw hints in a post on discussions.udacity.com. https://discussions.udacity.com/t/i-dont-understand-how-to-code-classic-arcade-game/527836/2?u=solittletime
 var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
@@ -91,7 +92,7 @@ Player.prototype.handleCollision = function(enemy) {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     //when player wins, i.e reach the water, reset the position of all the enemies and the player. 
-    if (this.y === 50) {
+    if (this.y < 50) {
         setTimeout( function(){
             pause = true;
             enemy1 = new Enemy(0, 100, 100);
@@ -102,19 +103,19 @@ Player.prototype.render = function() {
             pause = false;
         }, 500);
         ctx.font = '30px monospace';
-        ctx.fillText("You won", 150, 250);    
+        ctx.fillText("Great job! You won", 130, 40);
     }
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player. 
-var enemy1 = new Enemy(0, 100, 100);
-var enemy2 = new Enemy(0, 150, 120);
-var enemy3 = new Enemy(0, 75, 80);
-var allEnemies = [enemy1, enemy2, enemy3];
+let enemy1 = new Enemy(0, 100, 100);
+let enemy2 = new Enemy(0, 150, 120);
+let enemy3 = new Enemy(0, 75, 80);
+let allEnemies = [enemy1, enemy2, enemy3];
 
-var player = new Player();
+let player = new Player();
 
 let pause;
 
